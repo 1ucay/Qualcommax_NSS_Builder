@@ -151,6 +151,10 @@ CONFIG_BUSYBOX_CONFIG_DEVMEM=y
 ## /root/pstore on the next boot.
 CONFIG_PACKAGE_kmod-ramoops=y
 
+## TUN/TAP support for userspace VPNs such as Tailscale.
+## Provides /dev/net/tun required for normal Tailscale operation.
+CONFIG_PACKAGE_kmod-tun=y
+
 ## WireGuard VPN support (not bundled upstream - added in this fork)
 CONFIG_PACKAGE_wireguard-tools=y
 CONFIG_PACKAGE_kmod-wireguard=y
