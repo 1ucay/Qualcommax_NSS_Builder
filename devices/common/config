@@ -175,3 +175,8 @@ CONFIG_PACKAGE_luci-app-https-dns-proxy=y
 
 ## LuCI file manager (uses rpcd-mod-file, already enabled above)
 CONFIG_PACKAGE_luci-app-filemanager=y
+## openNDS captive portal. No dedicated luci-app-opennds package was found in
+## current feeds (the LuCI web UI note in openNDS' own docs refers to the
+## generic UCI/System pages, not a separate app) - so no luci line here. If
+## you find the right package name, tell me and I'll add it.
+CONFIG_PACKAGE_opennds=y
