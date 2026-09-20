@@ -140,13 +140,13 @@ jobs:
         # because the ath11k memory profile is compile-time and image-wide, so
         # boards can only share a build when they share a profile.
         device: [xiaomi_ax3600]
-        # The flavour is a .config fragment on top of the same overlays and the
-        # same source trees, applied after devices/common/config so it can
-        # override (disable) symbols set there, not just add new ones.
+        # The flavour is an additive .config fragment on top of
+        # devices/common/config - the default flavour gets the extras
+        # fragment, dumb gets no fragment (just the common base).
         flavour: [default, dumb]
         include:
-          - flavour: dumb
-            config_fragment: devices/common/config.dumb
+          - flavour: default
+            config_fragment: devices/common/config.extras
     env:
       GH_TOKEN: ${{ github.token }}
       DEVICE: ${{ matrix.device }}
