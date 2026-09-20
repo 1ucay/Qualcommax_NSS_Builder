@@ -1,0 +1,39 @@
+## "extras" flavour fragment - additive only, applied on top of
+## devices/common/config for the main (default) flavour. Kept separate from
+## common/config so the "dumb" flavour can just skip this fragment instead of
+## negating symbols (negating a common/config symbol from a later fragment
+## broke the pipeline's post-defconfig "every requested symbol kept" check).
+
+## WireGuard VPN support (not bundled upstream - added in this fork)
+CONFIG_PACKAGE_wireguard-tools=y
+CONFIG_PACKAGE_kmod-wireguard=y
+CONFIG_PACKAGE_luci-proto-wireguard=y
+
+## adblock, each with its LuCI frontend. "simple-adblock" was merged into
+## adblock-fast upstream (adblock-fast Provides/Conflicts: simple-adblock),
+## so that's the package selected below.
+CONFIG_PACKAGE_adblock-fast=y
+CONFIG_PACKAGE_luci-app-adblock-fast=y
+
+## DoH proxy
+CONFIG_PACKAGE_https-dns-proxy=y
+CONFIG_PACKAGE_luci-app-https-dns-proxy=y
+
+## openNDS captive portal. No dedicated luci-app-opennds package was found in
+## current feeds (the LuCI web UI note in openNDS' own docs refers to the
+## generic UCI/System pages, not a separate app) - so no luci line here. If
+## you find the right package name, tell me and I'll add it.
+CONFIG_PACKAGE_opennds=y
+
+## mwan3 (multi-WAN manager) + its missing kmods. This kernel never had these
+## netfilter xtables/nft-compat modules enabled, same situation as
+## kmod-wireguard earlier - the driver code exists upstream, it just wasn't
+## selected in this build before.
+CONFIG_PACKAGE_mwan3=y
+CONFIG_PACKAGE_luci-app-mwan3=y
+CONFIG_PACKAGE_kmod-ip6tables=y
+CONFIG_PACKAGE_kmod-nft-compat=y
+CONFIG_PACKAGE_kmod-ipt-ipset=y
+CONFIG_PACKAGE_kmod-ipt-core=y
+CONFIG_PACKAGE_kmod-ipt-conntrack-extra=y
+CONFIG_PACKAGE_kmod-ipt-ipopt=y
