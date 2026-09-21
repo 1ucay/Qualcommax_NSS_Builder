@@ -33,7 +33,9 @@ env:
   RELEASE_PREFIX: edma-nss
   DUMB_RELEASE_PREFIX: edma-nss-dumb
   KEEP: "2"                     # newest releases to retain, per prefix
-  FEEDS: "src-git nss https://github.com/JuliusBairaktaris/nss-packages.git;edma-nss"
+  FEEDS: |
+    src-git nss https://github.com/JuliusBairaktaris/nss-packages.git;edma-nss
+    src-git trafficctl https://github.com/YusDyr/luci-app-trafficctl.git
 
 jobs:
   check:
