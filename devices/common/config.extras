@@ -46,8 +46,10 @@ CONFIG_PACKAGE_kmod-ipt-ipopt=y
 CONFIG_PACKAGE_luci-app-trafficctl=y
 CONFIG_PACKAGE_conntrack=y
 CONFIG_PACKAGE_tc-full=y
-CONFIG_PACKAGE_kmod-sched-htb=y
 CONFIG_PACKAGE_kmod-ifb=y
 CONFIG_PACKAGE_iw-full=y
-CONFIG_PACKAGE_bridge-utils=y
 CONFIG_PACKAGE_hostapd-utils=y
+## kmod-sched-htb and bridge-utils were dropped by defconfig: HTB is already
+## bundled into kmod-sched-core (selected above in common/config), and
+## bridge-utils (brctl) is a removed legacy package superseded by ip-bridge
+## (also already selected in common/config).
