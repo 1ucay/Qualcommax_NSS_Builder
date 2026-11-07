@@ -5,6 +5,8 @@
 # A build is needed when:
 #   - the event is anything other than `schedule` — a push means the builder config changed
 #     and workflow_dispatch is an explicit request, so both always rebuild; OR
+#   - ALWAYS_BUILD=true, which makes scheduled ticks rebuild unconditionally (periodic
+#     refresh); OR
 #   - on a scheduled tick, the latest release for RELEASE_PREFIX does not already record the
 #     current upstream SHA (and NSS SHA, when NSS_REPO is set).
 #
@@ -17,6 +19,7 @@
 #   NSS_REF         NSS ref (only used when NSS_REPO is set)
 #   RELEASE_PREFIX  release tag prefix (tags are <prefix>-<ts>-<run id>)
 #   EVENT_NAME      github.event_name
+#   ALWAYS_BUILD    "true" to rebuild on every scheduled tick even when nothing moved
 #   REPO            this builder repo (owner/name); defaults to $GITHUB_REPOSITORY
 #   GH_TOKEN        forwarded to gh
 #   GITHUB_OUTPUT   Actions outputs file (when in CI)
@@ -63,8 +66,9 @@ latest_body() {
     2>/dev/null || printf '%s' ""
 }
 
-if [[ "$EVENT_NAME" != "schedule" ]]; then
-  # push (builder config changed) or manual dispatch (explicit) -> always rebuild.
+if [[ "$EVENT_NAME" != "schedule" || "${ALWAYS_BUILD:-}" == "true" ]]; then
+  # push (builder config changed), manual dispatch (explicit) or forced periodic
+  # refresh (ALWAYS_BUILD) -> always rebuild.
   need=true
 else
   # scheduled tick -> only rebuild when a source moved since the last release
