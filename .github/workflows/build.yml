@@ -14,7 +14,7 @@ on:
       - 'scripts/**'
       - '.github/workflows/build.yml'
   schedule:
-    - cron: "0 */2 * * *"
+    - cron: "0 3 * * 0"   # weekly, Sunday 03:00 UTC
 
 concurrency:
   group: build-${{ github.ref }}
@@ -46,6 +46,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       REPO: ${{ github.repository }}
       EVENT_NAME: ${{ github.event_name }}
+      ALWAYS_BUILD: "true"          # scheduled ticks rebuild even when upstream did not move
     outputs:
       upstream_sha: ${{ steps.check.outputs.upstream_sha }}
       nss_sha: ${{ steps.check.outputs.nss_sha }}
